@@ -1,0 +1,41 @@
+QUESTION 5.
+
+    //ENTITY INTEGRITY CONSTRAINT
+
+SELECT * FROM `country` WHERE 1
+INSERT INTO country(Country_Name)
+                    VALUES(NULL)
+
+
+    //FOREIGN KEY CONSTRAINTS
+
+SELECT * FROM `player_cards` WHERE 1
+INSERT INTO player_cards(Player_id, Yellow_Cards, Red_Cards)
+values(444412312, 'L, AASDFADSF)
+
+
+    //REFERENTIAL INTEGRITY CONSTRAINT
+
+SELECT * FROM 'players'
+INSERT INTO players(Player_id)
+values ("FOUR, FI, FO, AS, LOW")
+
+
+
+QUESTION 6.
+SELECT * FROM `country`
+SELECT * FROM Country_Name
+DELETE FROM Country_Name
+
+
+
+Question 7. 
+INSERT INTO country(Country_Name, Population, No_of_Worldcup_won, Manager)
+VALUES('Cennigal', 100, 10, 'George White')
+
+INSERT INTO country(Country_Name, Population, No_of_Worldcup_won, Manager)
+VALUES('South Africa', 543, 2, 'Steve Komphela')
+
+INSERT INTO country(Country_Name, Population, No_of_Worldcup_won, Manager)
+VALUES('England', 132, 19, 'Steve Komphela')
+

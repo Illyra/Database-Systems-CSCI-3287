@@ -1,0 +1,70 @@
+WHAT IS A DATABASE MANAGEMENT SYSTEM?
+    >Database is a large, integrated collection of Data
+    >Models real-world enterprise
+        >Entities(students, course)
+        >Relationship (for exdample, Madhuri is teaching CSCI-3287)
+    >A Database Management System is a software package designed to software
+
+
+
+Types of Database Applications
+    >Traditional Applications:
+        -Numeric and Textual Databases in Business Applications
+    >More Recent Applications:
+        -Multimedia Databases (images, video, voices, etc)
+        -Geographic informations systems (GIS)
+        -Data Warehouses
+        -Real-time and Active Databases
+        -Many other Applications
+    >Initial part of book focuses on traditional Applications
+    >A number of recent applicatrions are described later in the book (for example, chapters 26,27,28,29)
+
+Basic Defintions
+    >Database:  
+        -A collection of related Data
+    >Data
+        -known facts that can be recorded and have an implicit meaning.
+    >Mini-world
+        -Some part of the real world about which data is stored in a database.
+            for example, student registration, grades, and transcripts at a university
+    >Database Management System(DBMS)
+        -A software package/system to faciliate the creation and mantienance of a system.
+
+Typical DBMS Functionality
+    >Define a particular database in terms of its data types, Structures, and constraints
+    >Construct or Load the initial dabase contents on a secondary storage medium (typically hard disk)
+    >Manipulating the database:
+        -Retrieval : Querying, generating reports
+        -Modifications: Insertions, deletions and updates to its contents
+        -Accessing/changing the database through Web Applications
+    >Processing and Sharing by a set of concurrent users and application programs - yet, keeping all data
+        valid and consistent
+    >Other features
+        -Protection or Security measures to prevent unauthorized Accessing
+        -"Active" processing to take internal actions on data
+        -Presentation and Visualization of data
+        -Maintaining the database and associated programs over the lifetime of the database Applications
+            -Called database, software
+
+Examples of database University Applications
+    >Mini-world for example:
+        -Part of a university environment
+    >Some mini-world entitites:
+        -students
+        -courses
+        -Sections (of courses)
+        -(academic) DEPARTMENTS
+        -Instructors
+
+Main Characteristics of the Database Approach
+    >Self describing nature of a database system
+        -A DBMS catalag stores the description o f a particular
+            database (e.g data structures, types, and constraints)
+        -The description is called meta-data
+        -This allows the DBMS software to work with different database applications (university, banks, airlines, etc)
+    >Insulation between programs and data:
+        >Called program-data software
+    >Insulation between programs and data
+        -accomplished through data abstraction
+        -a data model is used to hide storage details and present the user with a conceptual view of the database
+        

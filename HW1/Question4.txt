@@ -1,0 +1,540 @@
+Question 4:
+
+    //Item 1.
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/players/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 - 22 (23 total, Query took 0.0016 seconds.)
+
+SELECT country, Position, Name, club FROM players
+WHERE country = 'USA'
+
+
+country	Position	Name	        club	
+USA	Defender	DAMARCUS BEASLEY	Puebla FC	
+USA	Midfielder	KYLE BECKERMAN	Real Salt Lake	
+USA	Goalkeeper	TIM HOWARD	Everton FC	
+USA	Midfielder	BRAD DAVIS	Houston Dynamo	
+USA	Midfielder	JERMAINE JONES	Besiktas JK	
+USA	Goalkeeper	NICK RIMANDO	Real Salt Lake	
+USA	Forward	CLINT DEMPSEY	Seattle Sounders FC	
+USA	Midfielder	MICHAEL BRADLEY	Toronto FC	
+USA	Defender	OMAR GONZALEZ	Los Angeles Galaxy	
+USA	Forward	JOZY ALTIDORE	Sunderland AFC	
+USA	Goalkeeper	BRAD GUZAN	Aston Villa FC	
+USA	Midfielder	ALEJANDRO BEDOYA	FC Nantes	
+USA	Defender	FABIAN JOHNSON	TSG 1899 Hoffenheim	
+USA	Midfielder	MIX DISKERUD	Rosenborg BK	
+USA	Defender	GEOFF CAMERON	Stoke City FC	
+USA	Forward	CHRIS WONDOLOWSKI	San Jose Earthquakes	
+USA	Midfielder	GRAHAM ZUSI	Sporting Kansas City	
+USA	Defender	TIMMY CHANDLER	1. FC Nuernberg	
+USA	Forward	ARON JOHANNSSON	AZ Alkmaar	
+USA	Defender	MATT BESLER	Sporting Kansas City	
+USA	Defender	DEANDRE YEDLIN	Seattle Sounders FC	
+USA	Midfielder	JULIAN GREEN	FC Bayern Muenchen	
+USA	Defender	JOHN BROOKS	Hertha BSC	
+
+
+    //Item 2.
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/country/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 -  7 (8 total, Query took 0.0012 seconds.)
+
+SELECT Country_Name, No_of_Worldcup_won  
+FROM country
+WHERE No_of_Worldcup_won >= 1
+
+
+Country_Name	No_of_Worldcup_won	
+Argentina	            2	
+Brazil	                5	
+England	                1	
+France	                1	
+Germany	                4	
+Italy	                4	
+Spain	                1	
+Uruguay	                2	
+
+
+
+    //Item 3.
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/country/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 - 23 (24 total, Query took 0.0011 seconds.)
+
+SELECT Country_Name, No_of_Worldcup_won 
+FROM country
+WHERE No_of_Worldcup_won = 0
+
+
+Country_Name	No_of_Worldcup_won	
+Algeria	0	
+Australia	0	
+Belgium	0	
+Bosnia & Herzegovina	0	
+Cameroon	0	
+Chile	0	
+Columbia	0	
+Costa Rica	0	
+Croatia	0	
+Ecuador	0	
+Ghana	0	
+Greece	0	
+Honduras	0	
+Iran	0	
+Ivory Coast	0	
+Japan	0	
+Mexico	0	
+Netherlands	0	
+Nigeria	0	
+Portugal	0	
+Russia	0	
+South Korea	0	
+Switzerland	0	
+USA	0	
+
+
+
+    //Item 4.
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/players/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 -  2 (3 total, Query took 0.0034 seconds.)
+
+SELECT players.name, players.Country, Yellow_Cards
+from players
+JOIN player_cards on players.Player_id = player_cards.Player_id
+where (player_cards.Yellow_Cards = (SELECT max(yellow_cards)
+                                   from player_cards))
+
+
+name	Country	Yellow_Cards	
+KONSTANTINOS KATSOURANIS	Greece	3	
+VEDAD IBISEVIC	Bosnia & Herzegovina	3	
+THIAGO SILVA	Brazil	3	
+
+    //Item 5
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/match_results/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 - 11 (12 total, Query took 0.0015 seconds.)
+
+SELECT COUNT(Host_City) as Host, Host_City
+FROM match_results
+GROUP BY Host_City
+HAVING COUNT(*) > 0
+
+
+Host	Host_City	
+6	Belo Horizonte	
+7	Brasilia	
+4	Cuiaba	
+4	Curitiba	
+6	Fortaleza	
+4	Manaus	
+4	Natal	
+5	Porto Alegre	
+5	Recife	
+7	Rio De Janerio	
+6	Salvador	
+6	Sao Paulo	
+
+
+    //Item 6
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/match_results/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 - 63 (64 total, Query took 0.0028 seconds.)
+
+SELECT Team1, SUM(Team1_score) as TotalNumberOfGoalsTeam1, Team2, SUM(Team2_score) as TotalNumberofGoalsTeam2, COUNT(Team1) as Team1Gmaes, COUNT(Team2) as Team2Games
+FROM match_results
+GROUP BY Team1, Team2
+HAVING COUNT(*) > 0
+
+
+Team1	TotalNumberOfGoalsTeam1	Team2	TotalNumberofGoalsTeam2	Team1Gmaes	Team2Games	
+Algeria	1	Russia	1	1	1	
+Argentina	1	Belgium	0	1	1	
+Argentina	2	Bosnia & Herzegovina	1	1	1	
+Argentina	1	Iran	0	1	1	
+Argentina	1	Switzerland	0	1	1	
+Australia	2	Netherlands	3	1	1	
+Australia	0	Spain	3	1	1	
+Belgium	2	Algeria	1	1	1	
+Belgium	1	Russia	0	1	1	
+Belgium	2	USA	1	1	1	
+Bosnia & Herzegovina	3	Iran	1	1	1	
+Brazil	1	Chile	1	1	1	
+Brazil	2	Columbia	1	1	1	
+Brazil	3	Croatia	1	1	1	
+Brazil	1	Germany	7	1	1	
+Brazil	0	Mexico	0	1	1	
+Brazil	0	Netherlands	3	1	1	
+Cameroon	1	Brazil	4	1	1	
+Cameroon	0	Croatia	4	1	1	
+Chile	3	Australia	1	1	1	
+Columbia	3	Greece	0	1	1	
+Columbia	2	Ivory Coast	1	1	1	
+Columbia	2	Uruguay	0	1	1	
+Costa Rica	0	England	0	1	1	
+Costa Rica	1	Greece	1	1	1	
+Croatia	1	Mexico	3	1	1	
+Ecuador	0	France	0	1	1	
+England	1	Italy	2	1	1	
+France	0	Germany	1	1	1	
+France	3	Honduras	0	1	1	
+France	2	Nigeria	0	1	1	
+Germany	2	Algeria	1	1	1	
+Germany	1	Argentina	0	1	1	
+Germany	2	Ghana	2	1	1	
+Germany	4	Portugal	0	1	1	
+Ghana	1	USA	2	1	1	
+Greece	2	Ivory Coast	1	1	1	
+Honduras	1	Ecuador	2	1	1	
+Honduras	0	Switzerland	3	1	1	
+Iran	0	Nigeria	0	1	1	
+Italy	0	Costa Rica	1	1	1	
+Italy	0	Uruguay	1	1	1	
+Ivory Coast	2	Japan	1	1	1	
+Japan	1	Columbia	4	1	1	
+Japan	0	Greece	0	1	1	
+Mexico	1	Cameroon	0	1	1	
+Netherlands	0	Argentina	0	1	1	
+Netherlands	2	Chile	0	1	1	
+Netherlands	0	Costa Rica	0	1	1	
+Netherlands	2	Mexico	1	1	1	
+Nigeria	2	Argentina	3	1	1	
+Nigeria	1	Bosnia & Herzegovina	0	1	1	
+Portugal	2	Ghana	1	1	1	
+Russia	1	South Korea	1	1	1	
+South Korea	2	Algeria	4	1	1	
+South Korea	0	Belgium	1	1	1	
+Spain	0	Chile	2	1	1	
+Spain	1	Netherlands	5	1	1	
+Switzerland	2	Ecuador	1	1	1	
+Switzerland	2	France	5	1	1	
+Uruguay	1	Costa Rica	3	1	1	
+Uruguay	2	England	1	1	1	
+USA	0	Germany	1	1	1	
+USA	2	Portugal	2	1	1	
+
+
+    //ITEM 7
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/match_results/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 - 63 (64 total, Query took 0.0024 seconds.)
+
+SELECT Team2, SUM(Team2_score) as TotalNumberOfGoalsTeam2, Team1, SUM(Team1_score) as TotalNumberofGOalsTeam1, COUNT(Team2) as Team2Gmaes, COUNT(Team1) as Team1Games
+FROM match_results
+GROUP BY Team1, Team2
+HAVING COUNT(*) > 0
+
+
+Team2	TotalNumberOfGoalsTeam2	Team1	TotalNumberofGOalsTeam1	Team2Gmaes	Team1Games	
+Russia	1	Algeria	1	1	1	
+Belgium	0	Argentina	1	1	1	
+Bosnia & Herzegovina	1	Argentina	2	1	1	
+Iran	0	Argentina	1	1	1	
+Switzerland	0	Argentina	1	1	1	
+Netherlands	3	Australia	2	1	1	
+Spain	3	Australia	0	1	1	
+Algeria	1	Belgium	2	1	1	
+Russia	0	Belgium	1	1	1	
+USA	1	Belgium	2	1	1	
+Iran	1	Bosnia & Herzegovina	3	1	1	
+Chile	1	Brazil	1	1	1	
+Columbia	1	Brazil	2	1	1	
+Croatia	1	Brazil	3	1	1	
+Germany	7	Brazil	1	1	1	
+Mexico	0	Brazil	0	1	1	
+Netherlands	3	Brazil	0	1	1	
+Brazil	4	Cameroon	1	1	1	
+Croatia	4	Cameroon	0	1	1	
+Australia	1	Chile	3	1	1	
+Greece	0	Columbia	3	1	1	
+Ivory Coast	1	Columbia	2	1	1	
+Uruguay	0	Columbia	2	1	1	
+England	0	Costa Rica	0	1	1	
+Greece	1	Costa Rica	1	1	1	
+Mexico	3	Croatia	1	1	1	
+France	0	Ecuador	0	1	1	
+Italy	2	England	1	1	1	
+Germany	1	France	0	1	1	
+Honduras	0	France	3	1	1	
+Nigeria	0	France	2	1	1	
+Algeria	1	Germany	2	1	1	
+Argentina	0	Germany	1	1	1	
+Ghana	2	Germany	2	1	1	
+Portugal	0	Germany	4	1	1	
+USA	2	Ghana	1	1	1	
+Ivory Coast	1	Greece	2	1	1	
+Ecuador	2	Honduras	1	1	1	
+Switzerland	3	Honduras	0	1	1	
+Nigeria	0	Iran	0	1	1	
+Costa Rica	1	Italy	0	1	1	
+Uruguay	1	Italy	0	1	1	
+Japan	1	Ivory Coast	2	1	1	
+Columbia	4	Japan	1	1	1	
+Greece	0	Japan	0	1	1	
+Cameroon	0	Mexico	1	1	1	
+Argentina	0	Netherlands	0	1	1	
+Chile	0	Netherlands	2	1	1	
+Costa Rica	0	Netherlands	0	1	1	
+Mexico	1	Netherlands	2	1	1	
+Argentina	3	Nigeria	2	1	1	
+Bosnia & Herzegovina	0	Nigeria	1	1	1	
+Ghana	1	Portugal	2	1	1	
+South Korea	1	Russia	1	1	1	
+Algeria	4	South Korea	2	1	1	
+Belgium	1	South Korea	0	1	1	
+Chile	2	Spain	0	1	1	
+Netherlands	5	Spain	1	1	1	
+Ecuador	1	Switzerland	2	1	1	
+France	5	Switzerland	2	1	1	
+Costa Rica	3	Uruguay	1	1	1	
+England	1	Uruguay	2	1	1	
+Germany	1	USA	0	1	1	
+Portugal	2	USA	2	1	1	
+
+    //ITEM 8
+
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/match_results/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 - 63 (64 total, Query took 0.0024 seconds.)
+
+SELECT Team2, SUM(Team2_score) as TotalNumberOfGoalsTeam2, Team1, SUM(Team1_score) as TotalNumberofGOalsTeam1, COUNT(Team2) as Team2Gmaes, COUNT(Team1) as Team1Games
+FROM match_results
+GROUP BY Team1, Team2
+HAVING COUNT(*) > 0
+
+
+Team2	TotalNumberOfGoalsTeam2	Team1	TotalNumberofGOalsTeam1	Team2Gmaes	Team1Games	
+Russia	1	Algeria	1	1	1	
+Belgium	0	Argentina	1	1	1	
+Bosnia & Herzegovina	1	Argentina	2	1	1	
+Iran	0	Argentina	1	1	1	
+Switzerland	0	Argentina	1	1	1	
+Netherlands	3	Australia	2	1	1	
+Spain	3	Australia	0	1	1	
+Algeria	1	Belgium	2	1	1	
+Russia	0	Belgium	1	1	1	
+USA	1	Belgium	2	1	1	
+Iran	1	Bosnia & Herzegovina	3	1	1	
+Chile	1	Brazil	1	1	1	
+Columbia	1	Brazil	2	1	1	
+Croatia	1	Brazil	3	1	1	
+Germany	7	Brazil	1	1	1	
+Mexico	0	Brazil	0	1	1	
+Netherlands	3	Brazil	0	1	1	
+Brazil	4	Cameroon	1	1	1	
+Croatia	4	Cameroon	0	1	1	
+Australia	1	Chile	3	1	1	
+Greece	0	Columbia	3	1	1	
+Ivory Coast	1	Columbia	2	1	1	
+Uruguay	0	Columbia	2	1	1	
+England	0	Costa Rica	0	1	1	
+Greece	1	Costa Rica	1	1	1	
+Mexico	3	Croatia	1	1	1	
+France	0	Ecuador	0	1	1	
+Italy	2	England	1	1	1	
+Germany	1	France	0	1	1	
+Honduras	0	France	3	1	1	
+Nigeria	0	France	2	1	1	
+Algeria	1	Germany	2	1	1	
+Argentina	0	Germany	1	1	1	
+Ghana	2	Germany	2	1	1	
+Portugal	0	Germany	4	1	1	
+USA	2	Ghana	1	1	1	
+Ivory Coast	1	Greece	2	1	1	
+Ecuador	2	Honduras	1	1	1	
+Switzerland	3	Honduras	0	1	1	
+Nigeria	0	Iran	0	1	1	
+Costa Rica	1	Italy	0	1	1	
+Uruguay	1	Italy	0	1	1	
+Japan	1	Ivory Coast	2	1	1	
+Columbia	4	Japan	1	1	1	
+Greece	0	Japan	0	1	1	
+Cameroon	0	Mexico	1	1	1	
+Argentina	0	Netherlands	0	1	1	
+Chile	0	Netherlands	2	1	1	
+Costa Rica	0	Netherlands	0	1	1	
+Mexico	1	Netherlands	2	1	1	
+Argentina	3	Nigeria	2	1	1	
+Bosnia & Herzegovina	0	Nigeria	1	1	1	
+Ghana	1	Portugal	2	1	1	
+South Korea	1	Russia	1	1	1	
+Algeria	4	South Korea	2	1	1	
+Belgium	1	South Korea	0	1	1	
+Chile	2	Spain	0	1	1	
+Netherlands	5	Spain	1	1	1	
+Ecuador	1	Switzerland	2	1	1	
+France	5	Switzerland	2	1	1	
+Costa Rica	3	Uruguay	1	1	1	
+England	1	Uruguay	2	1	1	
+Germany	1	USA	0	1	1	
+Portugal	2	USA	2	1	1	
+
+
+    //ITEM 9
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/players/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 - 115 (116 total, Query took 0.0022 seconds.) [Goals: 1... - 6...]
+
+SELECT Goals, players.name, players.country
+FROM players
+JOIN player_assists_goals on players.Player_id=player_assists_goals.Player_id
+WHERE player_assists_goals.Goals >= 1  
+ORDER BY `player_assists_goals`.`Goals` ASC
+
+
+Goals   	name	country	
+1	SHINJI OKAZAKI	Japan	
+1	MARIO BALOTELLI	Italy	
+1	MESUT OEZIL	Germany	
+1	DANIEL STURRIDGE	England	
+1	JOEL CAMPBELL	Costa Rica	
+1	SON HEUNGMIN	South Korea	
+1	TEOFILO GUTIERREZ	Columbia	
+1	HARIS SEFEROVIC	Switzerland	
+1	GRANIT XHAKA	Switzerland	
+1	OSCAR DUARTE	Costa Rica	
+1	VEDAD IBISEVIC	Bosnia & Herzegovina	
+1	EDIN DZEKO	Bosnia & Herzegovina	
+1	MIRALEM PJANIC	Bosnia & Herzegovina	
+1	THIAGO SILVA	Brazil	
+1	MAROUANE FELLAINI	Belgium	
+1	JAN VERTONGHEN	Belgium	
+1	KOO JACHEOL	South Korea	
+1	RAFIK HALLICHE	Algeria	
+1	MATHIEU VALBUENA	France	
+1	GEORGIOS SAMARAS	Greece	
+1	CLAUDIO MARCHISIO	Italy	
+1	SOKRATIS PAPASTATHOPOULOS	Greece	
+1	STEFAN DE VRIJ	Netherlands	
+1	MOUSSA SISSOKO	France	
+1	CHARLES ARANGUIZ	Chile	
+1	DRIES MERTENS	Belgium	
+1	KEVIN DE BRUYNE	Belgium	
+1	OGNJEN VRANJES	Bosnia & Herzegovina	
+1	REZA GHOOCHANNEJAD	Iran	
+1	ANDREAS SAMARIS	Greece	
+1	YACINE BRAHIMI	Algeria	
+1	PAUL POGBA	France	
+1	JULIAN GREEN	USA	
+1	JOHN BROOKS	USA	
+1	ROMELU LUKAKU	Belgium	
+1	ALEXANDER KOKORIN	Russia	
+1	OLIVIER GIROUD	France	
+1	MARCOS ROJO	Argentina	
+1	SOFIANE FEGHOULI	Algeria	
+1	DALEY BLIND	Netherlands	
+1	LEROY FER	Netherlands	
+1	GEORGINIO WIJNALDUM	Netherlands	
+1	JOEL MATIP	Cameroon	
+1	ADMIR MEHMEDI	Switzerland	
+1	JUAN QUINTERO	Columbia	
+1	BLAISE MATUIDI	France	
+1	DIVOCK ORIGI	Belgium	
+1	GONZALO HIGUAIN	Argentina	
+1	FERNANDINHO LUIZ ROZA	Brazil	
+1	KLAAS JAN HUNTELAAR	Netherlands	
+1	DAVID VILLA	Spain	
+1	DIEGO GODIN	Uruguay	
+1	IVICA OLIC	Croatia	
+1	BLERIM DZEMAILI	Switzerland	
+1	WAYNE ROONEY	England	
+1	JAVIER HERNANDEZ	Mexico	
+1	SAMI KHEDIRA	Germany	
+1	ORIBE PERALTA	Mexico	
+1	MILE JEDINAK	Australia	
+1	PABLO ARMERO	Columbia	
+1	CRISTIANO RONALDO	Portugal	
+1	JORGE VALDIVIA	Chile	
+1	WESLEY SNEIJDER	Netherlands	
+1	XABI ALONSO	Spain	
+1	PETER ODEMWINGIE	Nigeria	
+1	JEAN BEAUSEJOUR	Chile	
+1	KEISUKE HONDA	Japan	
+1	FRED CHAVES GUEDES	Brazil	
+1	RAFAEL MARQUEZ	Mexico	
+1	JUAN CUADRADO	Columbia	
+1	EDUARDO VARGAS	Chile	
+1	MARCOS URENA	Costa Rica	
+1	ANDRES GUARDADO	Mexico	
+1	ALEKSANDR KERZHAKOV	Russia	
+1	FERNANDO TORRES	Spain	
+1	LEE KEUNHO	South Korea	
+1	EDINSON CAVANI	Uruguay	
+1	JUAN MATA	Spain	
+1	GIOVANI DOS SANTOS	Mexico	
+1	JERMAINE JONES	USA	
+1	VARELA SILVESTRE	Portugal	
+1	NANI DA CUNHA	Portugal	
+1	ANGEL DI MARIA	Argentina	
+1	CARLO COSTLY	Honduras	
+2	WILFRIED BONY	Ivory Coast	
+2	ISLAM SLIMANI	Algeria	
+2	ABDELMOUMENE DJABOU	Algeria	
+2	CLINT DEMPSEY	USA	
+2	MARIO MANDZUKIC	Croatia	
+2	MIROSLAV KLOSE	Germany	
+2	IVAN PERISIC	Croatia	
+2	TONI KROOS	Germany	
+2	AHMED MUSA	Nigeria	
+2	MEMPHIS DEPAY	Netherlands	
+2	GERVINHO YAO KOUASSI	Ivory Coast	
+2	ANDRE AYEW	Ghana	
+2	MARIO GOETZE	Germany	
+2	LUIS SUAREZ	Uruguay	
+2	ALEXIS SANCHEZ	Chile	
+2	OSCAR DOS SANTOS JR.	Brazil	
+
+2	JACKSON MARTINEZ	Columbia	
+2	DAVID LUIZ	Brazil	
+2	MATS HUMMELS	Germany	
+2	BRYAN RUIZ	Costa Rica	
+2	TIM CAHILL	Australia	
+2	ASAMOAH GYAN	Ghana	
+3	XHERDAN SHAQIRI	Switzerland	
+3	ENNER VALENCIA	Ecuador	
+3	KARIM BENZEMA	France	
+3	ANDRE SCHUERRLE	Germany	
+3	ARJEN ROBBEN	Netherlands	
+4	LIONEL MESSI	Argentina	
+4	ROBIN VAN PERSIE	Netherlands	
+4	NEYMAR SANTOS JR.	Brazil	
+5	THOMAS MUELLER	Germany	
+6	JAMES RODRIGUEZ	Columbia	
+
+    //ITEM 10
+127.0.0.1/soccer_<team1_last_name1>_<team2_last_name2>/players/		http://localhost:8080/phpmyadmin/db_sql.php?db=soccer_%3Cteam1_last_name1%3E_%3Cteam2_last_name2%3E
+ Showing rows 0 - 31 (32 total, Query took 0.0020 seconds.) [Goals: 2... - 6...]
+
+SELECT Goals, players.name, players.country
+FROM players
+JOIN player_assists_goals on players.Player_id=player_assists_goals.Player_id
+WHERE player_assists_goals.Goals >= 2  
+ORDER BY `player_assists_goals`.`Goals` ASC
+
+
+Goals   	name	country	
+2	MIROSLAV KLOSE	Germany	
+2	MARIO MANDZUKIC	Croatia	
+2	MARIO GOETZE	Germany	
+2	MATS HUMMELS	Germany	
+2	OSCAR DOS SANTOS JR.	Brazil	
+2	JACKSON MARTINEZ	Columbia	
+2	MEMPHIS DEPAY	Netherlands	
+2	AHMED MUSA	Nigeria	
+2	WILFRIED BONY	Ivory Coast	
+2	ISLAM SLIMANI	Algeria	
+2	ABDELMOUMENE DJABOU	Algeria	
+2	IVAN PERISIC	Croatia	
+2	ANDRE AYEW	Ghana	
+2	GERVINHO YAO KOUASSI	Ivory Coast	
+2	TONI KROOS	Germany	
+2	TIM CAHILL	Australia	
+2	ASAMOAH GYAN	Ghana	
+2	ALEXIS SANCHEZ	Chile	
+2	CLINT DEMPSEY	USA	
+2	LUIS SUAREZ	Uruguay	
+2	DAVID LUIZ	Brazil	
+2	BRYAN RUIZ	Costa Rica	
+3	ARJEN ROBBEN	Netherlands	
+3	ENNER VALENCIA	Ecuador	
+3	ANDRE SCHUERRLE	Germany	
+3	XHERDAN SHAQIRI	Switzerland	
+3	KARIM BENZEMA	France	
+4	ROBIN VAN PERSIE	Netherlands	
+4	NEYMAR SANTOS JR.	Brazil	
+4	LIONEL MESSI	Argentina	
+5	THOMAS MUELLER	Germany	
+6	JAMES RODRIGUEZ	Columbia	
